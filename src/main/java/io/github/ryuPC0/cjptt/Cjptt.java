@@ -2,7 +2,13 @@ package io.github.ryuPC0.cjptt;
 
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.tterrag.registrate.Registrate;
+import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import io.github.ryuPC0.cjptt.speedSign.SpeedSignBlock;
+import io.github.ryuPC0.cjptt.speedSign.SpeedSignBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.food.FoodProperties;
@@ -45,10 +51,14 @@ public class Cjptt {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "cjptt" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
-    public static final CreateRegistrate CREATE_REGISTRATE = CreateRegistrate.create(MODID);
+    public static final NonNullSupplier<Registrate> REGISTRATE = NonNullSupplier.lazy(() -> Registrate.create(MODID));
 
     // Creates a new Block with the id "cjptt:example_block", combining the namespace and path
-    public static final RegistryObject<Block> SPEEDSIGN_BLOCK = BLOCKS.register("example_block", () -> new SpeedSignBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
+    public static final BlockEntry<SpeedSignBlock> SPEEDSIGN_BLOCK = REGISTRATE.get().block("speedsign",SpeedSignBlock::new).register();
+
+    public static final BlockEntityEntry<SpeedSignBlockEntity> SPEEDSIGN_BLOCKENTITY = REGISTRATE.get().blockEntity("speedsign",SpeedSignBlockEntity::new).register();
+
+
 
     // Creates a new BlockItem with the id "cjptt:example_block", combining the namespace and path
     //public static final RegistryObject<Item> EXAMPLE_BLOCK_ITEM = ITEMS.register("example_block", () -> new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties()));
@@ -56,11 +66,11 @@ public class Cjptt {
     // Creates a new food item with the id "cjptt:example_id", nutrition 1 and saturation 2
     //public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(2f).build())));
 
-    // Creates a creative tab with the id "cjptt:example_tab" for the example item, that is placed after the combat tab
-    /*public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder().withTabsBefore(CreativeModeTabs.COMBAT).icon(() -> EXAMPLE_ITEM.get().getDefaultInstance()).displayItems((parameters, output) -> {
-        output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-    }).build());*/
-
+    //Creates a creative tab with the id "cjptt:example_tab" for the example item, that is placed after the combat tabs
+    //public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder().withTabsBefore(CreativeModeTabs.COMBAT).icon(() -> SPEEDSIGN_ITEM.get().getDefaultInstance()).displayItems((parameters, output) -> {
+    //    output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+    //}).build());
+    @SuppressWarnings({"removal"})
     public Cjptt() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
