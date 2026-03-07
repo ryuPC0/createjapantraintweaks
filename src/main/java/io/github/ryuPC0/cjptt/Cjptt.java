@@ -54,9 +54,9 @@ public class Cjptt {
     public static final NonNullSupplier<Registrate> REGISTRATE = NonNullSupplier.lazy(() -> Registrate.create(MODID));
 
     // Creates a new Block with the id "cjptt:example_block", combining the namespace and path
-    public static final BlockEntry<SpeedSignBlock> SPEEDSIGN_BLOCK = REGISTRATE.get().block("speedsign",SpeedSignBlock::new).register();
+    public static final BlockEntry<SpeedSignBlock> SPEEDSIGN_BLOCK = REGISTRATE.get().block("simplespeedsign",SpeedSignBlock::new).register();
 
-    public static final BlockEntityEntry<SpeedSignBlockEntity> SPEEDSIGN_BLOCKENTITY = REGISTRATE.get().blockEntity("speedsign",SpeedSignBlockEntity::new).register();
+    public static final BlockEntityEntry<SpeedSignBlockEntity> SPEEDSIGN_BLOCKENTITY = REGISTRATE.get().blockEntity("simplespeedsign",SpeedSignBlockEntity::new).register();
 
 
 
