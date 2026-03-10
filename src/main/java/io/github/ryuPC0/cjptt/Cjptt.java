@@ -1,21 +1,20 @@
 package io.github.ryuPC0.cjptt;
 
 import com.mojang.logging.LogUtils;
+import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import io.github.ryuPC0.cjptt.speedSign.SpeedSignBlock;
-import io.github.ryuPC0.cjptt.speedSign.SpeedSignBlockEntity;
+import io.github.ryuPC0.cjptt.speedSign.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -37,7 +36,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
+import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
+
 // The value here should match an entry in the META-INF/mods.toml file
+@SuppressWarnings("removal")
 @Mod(Cjptt.MODID)
 public class Cjptt {
 
@@ -53,10 +55,11 @@ public class Cjptt {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
     public static final NonNullSupplier<Registrate> REGISTRATE = NonNullSupplier.lazy(() -> Registrate.create(MODID));
 
+    public static final EdgePointType<SpeedSign> SPEEDSIGN = EdgePointType.register(new ResourceLocation(MODID,"speedsign"),SpeedSign::new);
     // Creates a new Block with the id "cjptt:example_block", combining the namespace and path
-    public static final BlockEntry<SpeedSignBlock> SPEEDSIGN_BLOCK = REGISTRATE.get().block("simplespeedsign",SpeedSignBlock::new).register();
+    public static final BlockEntry<SpeedSignBlock> SPEEDSIGN_BLOCK = REGISTRATE.get().block("simplespeedsign",SpeedSignBlock::new).item(SpeedSignBlockItem.ofType(SPEEDSIGN)).transform(customItemModel()).register();
 
-    public static final BlockEntityEntry<SpeedSignBlockEntity> SPEEDSIGN_BLOCKENTITY = REGISTRATE.get().blockEntity("simplespeedsign",SpeedSignBlockEntity::new).register();
+    public static final BlockEntityEntry<SpeedSignBlockEntity> SPEEDSIGN_BLOCKENTITY = REGISTRATE.get().blockEntity("simplespeedsign",SpeedSignBlockEntity::new)/*.visual(() -> SpeedSignBlockRenderer::new)*/.renderer(() -> SpeedSignBlockRenderer::new).validBlock(SPEEDSIGN_BLOCK).register();
 
 
 
