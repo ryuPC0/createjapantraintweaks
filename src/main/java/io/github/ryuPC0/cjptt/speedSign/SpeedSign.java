@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class SpeedSign extends SingleBlockEntityEdgePoint implements IBE<SpeedSignBlockEntity> {
     boolean front = true;
+    double throttle = 1;
     @Override
     public void blockEntityAdded(BlockEntity blockEntity, boolean front)
     {
@@ -21,5 +22,9 @@ public class SpeedSign extends SingleBlockEntityEdgePoint implements IBE<SpeedSi
     @Override
     public BlockEntityType<? extends SpeedSignBlockEntity> getBlockEntityType() {
         return Cjptt.SPEEDSIGN_BLOCKENTITY.get();
+    }
+    public double Getthrottle()
+    {
+        return throttle;
     }
 }
