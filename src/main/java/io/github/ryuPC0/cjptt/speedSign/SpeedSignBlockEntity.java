@@ -58,7 +58,7 @@ public class SpeedSignBlockEntity extends SmartBlockEntity implements Transforma
         });
         throttle.between(5,100);
         throttle.setValue(100);
-        throttle.withCallback((x)-> Objects.requireNonNull(edgePoint.getEdgePoint()).throttle= (double) 1 /throttle.getValue());
+        throttle.withCallback((x)-> Objects.requireNonNull(edgePoint.getEdgePoint()).throttle= throttle.getValue() * 0.01);
         behaviours.add(throttle);
 
          //*/
