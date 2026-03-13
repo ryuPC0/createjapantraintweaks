@@ -19,12 +19,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class TrainMixin {
     @Shadow public double throttle;
 
-    @Inject(method = "lambda$frontSignalListener$6",at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/data/Pair;getFirst()Ljava/lang/Object;",ordinal = 3),cancellable = true)
+    @Inject(method = "lambda$frontSignalListener$6",at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/data/Pair;getFirst()Ljava/lang/Object;",ordinal = 2),cancellable = true)
     void Cjptt$frontsignallistenerThrottle(CallbackInfoReturnable<TravellingPoint.IEdgePointListener> cir, @Local Pair<TrackEdgePoint, Couple<TrackNode>> couple)
     {
         Object patt13732$temp = couple.getFirst();
         if (patt13732$temp instanceof SpeedSign speedSign) {
-            this.throttle = speedSign.Getthrottle();
+            if(speedSign.isPrimary(couple.getSecond().getSecond()))
+            {
+                throttle = speedSign.Getthrottle();
+                cir.cancel();
+            }
             cir.cancel();
         }
     }
