@@ -13,6 +13,7 @@ public class SpeedSign extends SingleBlockEntityEdgePoint implements IBE<SpeedSi
     @Override
     public void blockEntityAdded(BlockEntity blockEntity, boolean front)
     {
+        super.blockEntityAdded(blockEntity,front);
         this.front = front;
     }
     //@Override
