@@ -1,6 +1,8 @@
 package io.github.ryuPC0.cjptt.speedSign;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.railwayteam.railways.util.CustomTrackOverlayRendering;
+import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour.RenderedTrackOverlayType;
@@ -24,7 +26,7 @@ public class SpeedSignBlockRenderer extends SmartBlockEntityRenderer<SpeedSignBl
     protected void renderSafe(SpeedSignBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer,
                               int light, int overlay) {
         super.renderSafe(be, partialTicks, ms, buffer, light, overlay);
-
+        /*
         if (VisualizationManager.supportsVisualization(be.getLevel()))
             return;
 
@@ -45,7 +47,26 @@ public class SpeedSignBlockRenderer extends SmartBlockEntityRenderer<SpeedSignBl
         RenderedTrackOverlayType type = RenderedTrackOverlayType.SIGNAL;
         TrackTargetingBehaviour.render(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
                 buffer, light, overlay, type, 1);
-        ms.popPose();
 
+        ms.popPose();
+        */
+        TrackTargetingBehaviour<SpeedSign> target = be.edgePoint;
+        BlockPos pos = be.getBlockPos();
+        boolean offsetToSide = CustomTrackOverlayRendering.overlayWillOverlap(target);
+
+        BlockPos targetPosition = target.getGlobalPosition();
+        Level level = be.getLevel();
+        BlockState trackState = level.getBlockState(targetPosition);
+        Block block = trackState.getBlock();
+
+        if (!(block instanceof ITrackBlock))
+            return;
+
+        ms.pushPose();
+        TransformStack.of(ms)
+                .translate(targetPosition.subtract(pos));
+        CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
+                buffer, light, overlay, AllPartialModels.TRACK_SIGNAL_OVERLAY, 1, offsetToSide);
+        ms.popPose();
     }
 }
