@@ -1,9 +1,11 @@
 package io.github.ryuPC0.cjptt.speedSign;
 
+import com.simibubi.create.content.trains.graph.DimensionPalette;
 import com.simibubi.create.content.trains.graph.EdgePointType;
 import com.simibubi.create.content.trains.signal.SingleBlockEntityEdgePoint;
 import com.simibubi.create.foundation.block.IBE;
 import io.github.ryuPC0.cjptt.Cjptt;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -27,5 +29,17 @@ public class SpeedSign extends SingleBlockEntityEdgePoint implements IBE<SpeedSi
     public double Getthrottle()
     {
         return throttle;
+    }
+    @Override
+    public void read(CompoundTag nbt, boolean migration, DimensionPalette dimensions)
+    {
+        super.read(nbt, migration, dimensions);
+        throttle = nbt.getDouble("throttle");
+    }
+    @Override
+    public void write(CompoundTag nbt, DimensionPalette dimensions)
+    {
+        super.write(nbt,dimensions);
+        nbt.putDouble("throttle",throttle);
     }
 }
