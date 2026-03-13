@@ -58,7 +58,7 @@ public class SpeedSignBlockEntity extends SmartBlockEntity implements Transforma
 
             @Override
             public Vec3 getLocalOffset(LevelAccessor level, BlockPos pos, BlockState state) {
-                return new Vec3(0.5, 15.5 / 16d, 0.3);
+                return new Vec3(0.5, 15.5 / 16d, 0.6);
             }
         });
         throttle.between(5,100);
@@ -88,7 +88,7 @@ public class SpeedSignBlockEntity extends SmartBlockEntity implements Transforma
 
             @Override
             public Vec3 getLocalOffset(LevelAccessor level, BlockPos pos, BlockState state) {
-                return new Vec3(0.5, 15.5 / 16d, 0.5);
+                return new Vec3(0.5, 15.5 / 16d, 0.3);
             }
 
         });
