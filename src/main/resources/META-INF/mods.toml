@@ -67,3 +67,9 @@ mandatory=true
 versionRange="[6.0.8,6.1.0)"
 ordering="NONE"
 side="BOTH"
+[[dependencies."${mod_id}"]]
+modId="railways"
+mandatory=true
+versionRange="[1.7.1)"
+ordering="NONE"
+side="BOTH"
