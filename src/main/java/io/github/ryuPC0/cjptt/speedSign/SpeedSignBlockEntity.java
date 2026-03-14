@@ -74,7 +74,7 @@ public class SpeedSignBlockEntity extends SmartBlockEntity implements Transforma
         SpeedSign speedSign = getSpeedSign();
         if(speedSign != null)
         {
-            speedSign.setFilter(level,newFilter);
+            speedSign.setFilterAndNotify(level,newFilter);
         }
     }
     public FilteringBehaviour createFilter() {
