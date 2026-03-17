@@ -9,6 +9,7 @@ import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import io.github.ryuPC0.cjptt.schedule.CjpttSchedule;
 import io.github.ryuPC0.cjptt.speedSign.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -88,6 +89,7 @@ public class Cjptt {
         CREATIVE_MODE_TABS.register(modEventBus);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        CjpttSchedule.register();
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
@@ -131,5 +133,8 @@ public class Cjptt {
             //LOGGER.info("HELLO FROM CLIENT SETUP");
             //LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
+    }
+    public static ResourceLocation asResource(String name) {
+        return new ResourceLocation(MODID, name);
     }
 }
