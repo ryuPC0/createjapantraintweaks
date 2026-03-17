@@ -70,9 +70,9 @@ public class Cjptt {
     //public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(2f).build())));
 
     //Creates a creative tab with the id "cjptt:example_tab" for the example item, that is placed after the combat tabs
-    //public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder().withTabsBefore(CreativeModeTabs.COMBAT).icon(() -> SPEEDSIGN_ITEM.get().getDefaultInstance()).displayItems((parameters, output) -> {
-    //    output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-    //}).build());
+    public static final RegistryObject<CreativeModeTab> CJPTTTAB = CREATIVE_MODE_TABS.register("createjapantraintweaks", () -> CreativeModeTab.builder().displayItems((parameters, output) -> {
+        output.accept(SPEEDSIGN_BLOCK.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+    }).build());
     @SuppressWarnings({"removal"})
     public Cjptt() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -98,8 +98,8 @@ public class Cjptt {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-        LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
+        //LOGGER.info("HELLO FROM COMMON SETUP");
+        //LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
 
         if (Config.logDirtBlock) LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
 
@@ -118,7 +118,7 @@ public class Cjptt {
     public void onServerStarting(ServerStartingEvent event) {
 
         // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
+        //LOGGER.info("HELLO from server starting");
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -128,8 +128,8 @@ public class Cjptt {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+            //LOGGER.info("HELLO FROM CLIENT SETUP");
+            //LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
     }
 }
