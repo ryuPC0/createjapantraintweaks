@@ -11,10 +11,14 @@ import com.simibubi.create.content.trains.signal.TrackEdgePoint;
 import io.github.ryuPC0.cjptt.speedSign.SpeedSign;
 import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.data.Pair;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -35,67 +39,66 @@ public class TrainMixin {
     {
         Object patt13732$temp = couple.getFirst();
         if (patt13732$temp instanceof SpeedSign speedSign) {
-            if(speedSign.isPrimary(couple.getSecond().getSecond()))
-            {
-                throttle = speedSign.Getthrottle();
-                cir.cancel();
-            }
-            cir.cancel();
-            /*
-            FilterItemStack filter = speedSign.getFilter();
-            if (filter.isEmpty()) {
-                throttle = speedSign.Getthrottle();
-                cir.cancel();
-            }else {
-                UUID uuid = speedSign.id;
-                int storageVersion = 0;
-                for (Carriage carriage : carriages)
-                    storageVersion += carriage.storage.getVersion();
-                Pair<Integer, Boolean> cachedMatch = cachedObserverFiltering.computeIfAbsent(uuid, $ -> Pair.of(-1, false));
-                boolean shouldActivate = cachedMatch.getSecond();
-
-                if (cachedMatch.getFirst() == storageVersion) {
-                    if (shouldActivate)
-                        throttle = speedSign.Getthrottle();
+            if (speedSign.isPrimary(couple.getSecond().getSecond())) {
+                //*
+                FilterItemStack filter = speedSign.getFilter();
+                if (filter.isEmpty()) {
+                    throttle = speedSign.Getthrottle();
                     cir.cancel();
-                }else {
-                    shouldActivate = false;
-                    for (Carriage carriage : carriages) {
+                } else {
+                    UUID uuid = speedSign.id;
+                    int storageVersion = 0;
+                    ResourceKey<Level> resourcekey = ((SpeedSign) patt13732$temp).getBlockEntityDimension();
+                    MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+                    Level level = server.getLevel(resourcekey);
+                    for (Carriage carriage : carriages)
+                        storageVersion += carriage.storage.getVersion();
+                    Pair<Integer, Boolean> cachedMatch = cachedObserverFiltering.computeIfAbsent(uuid, $ -> Pair.of(-1, false));
+                    boolean shouldActivate = cachedMatch.getSecond();
+
+                    if (cachedMatch.getFirst() == storageVersion) {
                         if (shouldActivate)
-                            break;
+                            throttle = speedSign.Getthrottle();
+                        cir.cancel();
+                    } else {
+                        shouldActivate = false;
+                        for (Carriage carriage : carriages) {
+                            if (shouldActivate)
+                                break;
 
-                        IItemHandlerModifiable inv = carriage.storage.getAllItems();
-                        if (inv != null) {
-                            for (int slot = 0; slot < inv.getSlots(); slot++) {
-                                if (shouldActivate)
-                                    break;
-                                ItemStack extractItem = inv.extractItem(slot, 1, true);
-                                if (extractItem.isEmpty())
-                                    continue;
-                                shouldActivate |= filter.test(level, extractItem);
+                            IItemHandlerModifiable inv = carriage.storage.getAllItems();
+                            if (inv != null) {
+                                for (int slot = 0; slot < inv.getSlots(); slot++) {
+                                    if (shouldActivate)
+                                        break;
+                                    ItemStack extractItem = inv.extractItem(slot, 1, true);
+                                    if (extractItem.isEmpty())
+                                        continue;
+                                    shouldActivate |= filter.test(level, extractItem);
+                                }
+                            }
+
+                            IFluidHandler tank = carriage.storage.getFluids();
+                            if (tank != null) {
+                                for (int slot = 0; slot < tank.getTanks(); slot++) {
+                                    if (shouldActivate)
+                                        break;
+                                    FluidStack drain = tank.drain(1, IFluidHandler.FluidAction.SIMULATE);
+                                    if (drain.isEmpty())
+                                        continue;
+                                    shouldActivate |= filter.test(level, drain);
+                                }
                             }
                         }
 
-                        IFluidHandler tank = carriage.storage.getFluids();
-                        if (tank != null) {
-                            for (int slot = 0; slot < tank.getTanks(); slot++) {
-                                if (shouldActivate)
-                                    break;
-                                FluidStack drain = tank.drain(1, IFluidHandler.FluidAction.SIMULATE);
-                                if (drain.isEmpty())
-                                    continue;
-                                shouldActivate |= filter.test(level, drain);
-                            }
-                        }
+                        cachedObserverFiltering.put(uuid, Pair.of(storageVersion, shouldActivate));
+
+                        if (shouldActivate)
+                            throttle = speedSign.Getthrottle();
                     }
-
-                    cachedObserverFiltering.put(uuid, Pair.of(storageVersion, shouldActivate));
-
-                    if (shouldActivate)
-                        throttle = speedSign.Getthrottle();
                 }
+                //*/
             }
-            */
         }
     }
 }
