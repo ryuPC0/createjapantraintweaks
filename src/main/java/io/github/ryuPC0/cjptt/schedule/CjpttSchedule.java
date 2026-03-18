@@ -13,7 +13,7 @@ import static com.simibubi.create.content.trains.schedule.Schedule.INSTRUCTION_T
 public class CjpttSchedule {
     static
     {
-        registerCondition("Reserved",ReservedSignalBlockCondition::new);
+        registerCondition("reserved",ReservedSignalBlockCondition::new);
     }
     private static void registerInstruction(String name, Supplier<? extends ScheduleInstruction> factory) {
         INSTRUCTION_TYPES.add(Pair.of(Cjptt.asResource(name), factory));

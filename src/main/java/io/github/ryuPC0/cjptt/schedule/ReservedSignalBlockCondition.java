@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 public class ReservedSignalBlockCondition extends ScheduleWaitCondition {
     @Override
     public boolean tickCompletion(Level level, Train train, CompoundTag context) {
+
         return false;
     }
 
@@ -29,6 +30,6 @@ public class ReservedSignalBlockCondition extends ScheduleWaitCondition {
 
     @Override
     public ResourceLocation getId() {
-        return Cjptt.asResource("Reserved");
+        return Cjptt.asResource("reserved");
     }
 }
