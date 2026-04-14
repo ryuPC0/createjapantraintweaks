@@ -8,6 +8,7 @@
     "TrainMixin"
   ],
   "client": [
+    "TrainHUDMixin"
   ],
   "injectors": {
     "defaultRequire": 1
