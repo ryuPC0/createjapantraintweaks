@@ -1,14 +1,12 @@
-package io.github.ryuPC0.cjptt.speedSign;
+package io.github.ryuPC0.cjptt.speedSign.simple;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
-import com.simibubi.create.content.trains.track.TrackTargetingBehaviour.RenderedTrackOverlayType;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 
-import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;

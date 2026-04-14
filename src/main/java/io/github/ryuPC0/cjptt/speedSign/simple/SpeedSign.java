@@ -1,9 +1,8 @@
-package io.github.ryuPC0.cjptt.speedSign;
+package io.github.ryuPC0.cjptt.speedSign.simple;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
 import com.simibubi.create.content.trains.graph.DimensionPalette;
-import com.simibubi.create.content.trains.graph.EdgePointType;
 import com.simibubi.create.content.trains.graph.TrackEdge;
 import com.simibubi.create.content.trains.graph.TrackGraph;
 import com.simibubi.create.content.trains.signal.SignalPropagator;

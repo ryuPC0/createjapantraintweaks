@@ -1,12 +1,10 @@
-package io.github.ryuPC0.cjptt.speedSign;
+package io.github.ryuPC0.cjptt.speedSign.simple;
 
 import java.util.List;
 import java.util.Objects;
 
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.Create;
-import com.simibubi.create.content.trains.graph.EdgePointType;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
@@ -14,9 +12,6 @@ import dev.engine_room.flywheel.lib.transform.TransformStack;
 import io.github.ryuPC0.cjptt.Cjptt;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentContents;
-import net.minecraft.network.chat.Style;
-import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;

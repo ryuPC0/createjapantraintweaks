@@ -1,4 +1,4 @@
-package io.github.ryuPC0.cjptt.speedSign;
+package io.github.ryuPC0.cjptt.speedSign.simple;
 
 import com.simibubi.create.content.trains.graph.EdgePointType;
 import com.simibubi.create.content.trains.track.TrackTargetingBlockItem;

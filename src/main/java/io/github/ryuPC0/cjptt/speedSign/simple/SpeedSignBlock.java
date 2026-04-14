@@ -1,4 +1,4 @@
-package io.github.ryuPC0.cjptt.speedSign;
+package io.github.ryuPC0.cjptt.speedSign.simple;
 
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
@@ -6,15 +6,9 @@ import io.github.ryuPC0.cjptt.Cjptt;
 import net.minecraft.world.level.block.Block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition.Builder;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public class SpeedSignBlock extends Block implements IBE<SpeedSignBlockEntity>, IWrenchable {
     public SpeedSignBlock(Properties properties)
