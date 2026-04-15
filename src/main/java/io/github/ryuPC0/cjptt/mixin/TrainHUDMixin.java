@@ -32,6 +32,6 @@ public class TrainHUDMixin {
         Train train = getCarriage().train;
         double displayspeed = (double) ((int)(train.speed * 720))/10;
         displayspeed = displayspeed < 0 ? -displayspeed : displayspeed;
-        graphics.drawString(Minecraft.getInstance().font,String.valueOf(displayspeed) + "km/h",1,-7,0x544D45);
+        graphics.drawString(Minecraft.getInstance().font, displayspeed + "km/h",1,-7,0xFFFFFF);
     }
 }
