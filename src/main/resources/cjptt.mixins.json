@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "cjptt.refmap.json",
   "mixins": [
+    "CarriageContraptionMixin",
     "TrainMixin"
   ],
   "client": [
