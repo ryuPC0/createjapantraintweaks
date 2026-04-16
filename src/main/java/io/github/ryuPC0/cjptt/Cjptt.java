@@ -2,17 +2,25 @@ package io.github.ryuPC0.cjptt;
 
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.foundation.data.AssetLookup;
+import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsBlock;
+import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsInteractionBehaviour;
+import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsMovementBehaviour;
 import io.github.ryuPC0.cjptt.schedule.CjpttSchedule;
 import io.github.ryuPC0.cjptt.speedSign.simple.*;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -30,7 +38,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
+import static com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour.interactionBehaviour;
+import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movementBehaviour;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
+import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @SuppressWarnings("removal")
@@ -55,7 +66,21 @@ public class Cjptt {
 
     public static final BlockEntityEntry<SpeedSignBlockEntity> SPEEDSIGN_BLOCKENTITY = REGISTRATE.get().blockEntity("simplespeedsign",SpeedSignBlockEntity::new)/*.visual(() -> SpeedSignBlockRenderer::new)*/.renderer(() -> SpeedSignBlockRenderer::new).validBlock(SPEEDSIGN_BLOCK).register();
 
-
+    public static final BlockEntry<ExtendedControlsBlock> EXTENDED_TRAIN_CONTROLS = REGISTRATE.get().block("extendedcontrols", ExtendedControlsBlock::new)
+            .initialProperties(SharedProperties::softMetal)
+            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN)
+                    .sound(SoundType.NETHERITE_BLOCK))
+            .addLayer(() -> RenderType::cutoutMipped)
+            .transform(pickaxeOnly())
+            .blockstate((c, p) -> p.horizontalBlock(c.get(),
+                    s -> AssetLookup.partialBaseModel(c, p,
+                            s.getValue(ExtendedControlsBlock.VIRTUAL) ? "virtual" : s.getValue(ExtendedControlsBlock.OPEN) ? "open" : "closed")))
+            .onRegister(movementBehaviour(new ExtendedControlsMovementBehaviour()))
+            .onRegister(interactionBehaviour(new ExtendedControlsInteractionBehaviour()))
+            .lang("Extended Train Controls")
+            .item()
+            .transform(customItemModel())
+            .register();
 
     // Creates a new BlockItem with the id "cjptt:example_block", combining the namespace and path
     //public static final RegistryObject<Item> EXAMPLE_BLOCK_ITEM = ITEMS.register("example_block", () -> new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties()));
@@ -65,7 +90,7 @@ public class Cjptt {
 
     //Creates a creative tab with the id "cjptt:example_tab" for the example item, that is placed after the combat tabs
     public static final RegistryObject<CreativeModeTab> CJPTTTAB = CREATIVE_MODE_TABS.register("createjapantraintweaks", () -> CreativeModeTab.builder().displayItems((parameters, output) -> {
-        output.accept(SPEEDSIGN_BLOCK.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+        output.accept(SPEEDSIGN_BLOCK.get()); output.accept(EXTENDED_TRAIN_CONTROLS);// Add the example item to the tab. For your own tabs, this method is preferred over the event
     }).build());
     @SuppressWarnings({"removal"})
     public Cjptt() {
