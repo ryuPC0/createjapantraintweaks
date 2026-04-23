@@ -1,28 +1,22 @@
 package io.github.ryuPC0.cjptt.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
-import com.mojang.math.Axis;
 import com.simibubi.create.content.contraptions.Contraption;
 import com.simibubi.create.content.trains.entity.CarriageContraption;
 import io.github.ryuPC0.cjptt.Cjptt;
 import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsBlock;
-import net.createmod.catnip.data.Couple;
-import net.createmod.catnip.data.Iterate;
+import io.github.ryuPC0.cjptt.mixininterface.CarriageContraptionMixinInterface;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import org.apache.commons.lang3.tuple.Pair;
-import org.checkerframework.checker.units.qual.A;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -32,18 +26,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import static io.github.ryuPC0.cjptt.Cjptt.LOGGER;
 
 @Mixin(value = CarriageContraption.class,remap = false)
-public abstract class CarriageContraptionMixin extends Contraption {
+public abstract class CarriageContraptionMixin extends Contraption implements CarriageContraptionMixinInterface {
     @Shadow private boolean forwardControls;
     @Shadow private boolean backwardControls;
     @Shadow private Direction assemblyDirection;
     @Unique public Map<BlockPos,Direction> cjptt$extendedconductorSeats;
+
+    @Override
+    public Map<BlockPos, Direction> cjptt$getextendedconductorSeats() {
+        return cjptt$extendedconductorSeats;
+    }
+
     @Inject(method = "<init>()V",at = @At(value = "TAIL"))
     void Cjptt$Initializationvariable(CallbackInfo ci){
         this.cjptt$extendedconductorSeats = new HashMap<>();
@@ -74,7 +72,6 @@ public abstract class CarriageContraptionMixin extends Contraption {
                     if (Cjptt.EXTENDED_TRAIN_CONTROLS.has(blockState)) {
                         if(blockState.getValue(ExtendedControlsBlock.FACING) == direction.getOpposite()) {
                             Direction direction1 = assemblyDirection.getClockWise(direction.getAxis());
-                            LOGGER.info("{}",direction1);
                             cjptt$extendedconductorSeats.put(seatpos, assemblyDirection.getClockWise(direction.getAxis()));
                         }
                     }

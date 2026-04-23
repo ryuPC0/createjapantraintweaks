@@ -8,7 +8,9 @@ import com.simibubi.create.content.trains.TrainHUD;
 import com.simibubi.create.content.trains.entity.Carriage;
 import com.simibubi.create.content.trains.entity.CarriageContraptionEntity;
 import com.simibubi.create.content.trains.entity.Train;
+import io.github.ryuPC0.cjptt.Cjptt;
 import io.github.ryuPC0.cjptt.Config;
+import io.github.ryuPC0.cjptt.mixininterface.TrainMixinInterface;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
@@ -30,14 +32,15 @@ public class TrainHUDMixin {
         }
     }
     @Inject(method = "renderOverlay",at = @At(value = "INVOKE",target = "Lcom/simibubi/create/foundation/gui/AllGuiTextures;render(Lnet/minecraft/client/gui/GuiGraphics;II)V",ordinal = 4),cancellable = true)
-    private static void Cjptt$renderOverlaySpeedText(ForgeGui gui, GuiGraphics graphics, float partialTicks, int width, int height, CallbackInfo ci)
+    private static void Cjptt$renderOverlaySpeedText(ForgeGui gui, GuiGraphics graphics, float partialTicks, int width, int height, CallbackInfo ci, @Local PoseStack poseStack)
     {
         Train train = getCarriage().train;
         double displayspeed = (double) ((int)(train.speed * 720))/10;
         displayspeed = displayspeed < 0 ? -displayspeed : displayspeed;
         graphics.drawString(Minecraft.getInstance().font, displayspeed + "km/h",1,-7,0xFFFFFF);
-        if(Config.magicNumber == 42) {
-            graphics.pose().popPose();
+        boolean isextended = ((TrainMixinInterface)train).cjptt$getisextendedtrain();
+        if(isextended) {
+            poseStack.popPose();
             ci.cancel();
         }
     }
