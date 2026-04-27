@@ -11,6 +11,7 @@ import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsBlock;
 import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsInteractionBehaviour;
 import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsMovementBehaviour;
+import io.github.ryuPC0.cjptt.registry.CjpttPackets;
 import io.github.ryuPC0.cjptt.schedule.CjpttSchedule;
 import io.github.ryuPC0.cjptt.speedSign.simple.*;
 import net.minecraft.client.renderer.RenderType;
@@ -108,7 +109,7 @@ public class Cjptt {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         CjpttSchedule.register();
-
+        CjpttPackets.registerPackets();
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 

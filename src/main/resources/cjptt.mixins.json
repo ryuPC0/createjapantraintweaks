@@ -8,7 +8,6 @@
     "CarriageContraptionMixin",
     "StationBlockEntityMixin",
     "TrainMixin",
-    "TrainPacketMixin",
     "accessor.AbstractContraptionEntityAccessor",
     "accessor.CarriageAccessor"
   ],

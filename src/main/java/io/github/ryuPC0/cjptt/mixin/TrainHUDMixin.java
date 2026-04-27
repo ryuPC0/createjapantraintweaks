@@ -13,9 +13,12 @@ import io.github.ryuPC0.cjptt.Config;
 import io.github.ryuPC0.cjptt.mixininterface.TrainMixinInterface;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.UUIDUtil;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
+import org.apache.logging.log4j.core.util.UuidUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -32,9 +35,9 @@ public class TrainHUDMixin {
         }
     }
     @Inject(method = "renderOverlay",at = @At(value = "INVOKE",target = "Lcom/simibubi/create/foundation/gui/AllGuiTextures;render(Lnet/minecraft/client/gui/GuiGraphics;II)V",ordinal = 4),cancellable = true)
-    private static void Cjptt$renderOverlaySpeedText(ForgeGui gui, GuiGraphics graphics, float partialTicks, int width, int height, CallbackInfo ci, @Local PoseStack poseStack)
+    private static void Cjptt$renderOverlaySpeedText(ForgeGui gui, GuiGraphics graphics, float partialTicks, int width, int height, CallbackInfo ci, @Local PoseStack poseStack, @Local Carriage carriage)
     {
-        Train train = getCarriage().train;
+        Train train = carriage.train;
         double displayspeed = (double) ((int)(train.speed * 720))/10;
         displayspeed = displayspeed < 0 ? -displayspeed : displayspeed;
         graphics.drawString(Minecraft.getInstance().font, displayspeed + "km/h",1,-7,0xFFFFFF);
