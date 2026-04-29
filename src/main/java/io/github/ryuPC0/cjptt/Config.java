@@ -8,7 +8,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 public class Config {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
-    private static final ForgeConfigSpec.BooleanValue LOG_DIRT_BLOCK = BUILDER.comment("Whether to log the dirt block on common setup").define("logDirtBlock", true);
+    private static final ForgeConfigSpec.BooleanValue SPEED_TEXT_RENDER_IF_NOTEXT = BUILDER.comment("速度数値の表示を拡張運転台非設置時に表示するかどうか").define("speedtxtrendnotext", true);
 
     private static final ForgeConfigSpec.IntValue MAGIC_NUMBER = BUILDER.comment("A magic number").defineInRange("magicNumber", 42, 0, Integer.MAX_VALUE);
 
@@ -31,7 +30,7 @@ public class Config {
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
-    public static boolean logDirtBlock;
+    public static boolean speedtxtrendnotext;
     public static int magicNumber;
     public static String magicNumberIntroduction;
     public static Set<Item> items;
@@ -42,7 +41,7 @@ public class Config {
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
-        logDirtBlock = LOG_DIRT_BLOCK.get();
+        speedtxtrendnotext = SPEED_TEXT_RENDER_IF_NOTEXT.get();
         magicNumber = MAGIC_NUMBER.get();
         magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
 

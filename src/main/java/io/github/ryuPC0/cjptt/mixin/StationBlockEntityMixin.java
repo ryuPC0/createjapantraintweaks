@@ -25,10 +25,8 @@ public class StationBlockEntityMixin {
     @Inject(method = "assemble",at = @At(value = "INVOKE", target = "Ljava/util/List;size()I",ordinal = 10))
     void Cjptt$assembleextseatcheck(UUID playerUUID, CallbackInfo ci, @Local(ordinal = 0) Train train, @Local(name = "contraptions")List<CarriageContraption> contraptions){
         contraptions.forEach((c -> {
-            Cjptt.LOGGER.info("mixin,foreachok");
             if(!((CarriageContraptionMixinInterface)c).cjptt$getextendedconductorSeats().isEmpty()) {
                 ((TrainMixinInterface) train).cjptt$setisextendedtrain(true);
-                Cjptt.LOGGER.info("exttrain");
             }
         }));
     }

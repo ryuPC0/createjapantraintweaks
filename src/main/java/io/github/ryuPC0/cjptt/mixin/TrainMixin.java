@@ -50,13 +50,11 @@ public class TrainMixin implements TrainMixinInterface {
     @Unique public boolean cjptt$extendedtrain;
     @Override
     public boolean cjptt$getisextendedtrain(){
-        Cjptt.LOGGER.info("getexttrain,return:{},uuid:{}",cjptt$extendedtrain,id.toString());
         return cjptt$extendedtrain;
     }
     @Override
     public void cjptt$setisextendedtrain(boolean value){
         cjptt$extendedtrain = value;
-        Cjptt.LOGGER.info("setexttrain,value:{},uuid:{}",cjptt$extendedtrain,id.toString());
     }
     @Inject(method = "lambda$frontSignalListener$6",at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/data/Pair;getFirst()Ljava/lang/Object;",ordinal = 2),cancellable = true)
     void Cjptt$frontsignallistenerThrottle(CallbackInfoReturnable<TravellingPoint.IEdgePointListener> cir, @Local(argsOnly = true) Pair<TrackEdgePoint, Couple<TrackNode>> couple)
