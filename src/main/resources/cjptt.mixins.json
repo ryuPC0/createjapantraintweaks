@@ -6,6 +6,7 @@
   "refmap": "cjptt.refmap.json",
   "mixins": [
     "CarriageContraptionMixin",
+    "NavigationMixin",
     "StationBlockEntityMixin",
     "TrainMixin",
     "accessor.AbstractContraptionEntityAccessor",
