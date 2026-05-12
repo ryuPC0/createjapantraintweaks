@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "cjptt.refmap.json",
   "mixins": [
+    "CarriageContraptionEntityMixin",
     "CarriageContraptionMixin",
+    "ConductorBlockInteractionBehaviorMixin",
     "NavigationMixin",
     "StationBlockEntityMixin",
     "TrainMixin",
@@ -13,7 +15,8 @@
     "accessor.CarriageAccessor"
   ],
   "client": [
-    "TrainHUDMixin"
+    "TrainHUDMixin",
+    "ControlsHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
