@@ -10,6 +10,8 @@ import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringB
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import io.github.ryuPC0.cjptt.Cjptt;
+import io.github.ryuPC0.cjptt.registry.CjpttBlocks;
+import io.github.ryuPC0.cjptt.registry.CjpttEdgePointType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -40,7 +42,7 @@ public class SpeedSignBlockEntity extends SmartBlockEntity implements Transforma
 
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-        behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, Cjptt.SPEEDSIGN));
+        behaviours.add(edgePoint = new TrackTargetingBehaviour<>(this, CjpttEdgePointType.SPEEDSIGN));
         behaviours.add(filtering = createFilter().withCallback(this::onFilterChanged));
         //*
         throttle = new ScrollValueBehaviour(Component.nullToEmpty(null)

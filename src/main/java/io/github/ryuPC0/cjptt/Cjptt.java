@@ -11,8 +11,10 @@ import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsBlock;
 import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsInteractionBehaviour;
 import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsMovementBehaviour;
+import io.github.ryuPC0.cjptt.registry.CjpttBlocks;
 import io.github.ryuPC0.cjptt.registry.CjpttPackets;
 import io.github.ryuPC0.cjptt.schedule.CjpttSchedule;
+import io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSignBlockEntity;
 import io.github.ryuPC0.cjptt.speedSign.simple.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.Registries;
@@ -43,6 +45,8 @@ import static com.simibubi.create.api.behaviour.interaction.MovingInteractionBeh
 import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movementBehaviour;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
+import static io.github.ryuPC0.cjptt.registry.CjpttBlocks.*;
+import static io.github.ryuPC0.cjptt.registry.CjpttEdgePointType.SPEEDSIGN;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @SuppressWarnings("removal")
@@ -61,37 +65,15 @@ public class Cjptt {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
     public static final NonNullSupplier<Registrate> REGISTRATE = NonNullSupplier.lazy(() -> Registrate.create(MODID));
 
-    public static final EdgePointType<SpeedSign> SPEEDSIGN = EdgePointType.register(new ResourceLocation(MODID,"speedsign"),SpeedSign::new);
     // Creates a new Block with the id "cjptt:example_block", combining the namespace and path
-    public static final BlockEntry<SpeedSignBlock> SPEEDSIGN_BLOCK = REGISTRATE.get().block("simplespeedsign",SpeedSignBlock::new).item(SpeedSignBlockItem.ofType(SPEEDSIGN)).transform(customItemModel()).register();
 
     public static final BlockEntityEntry<SpeedSignBlockEntity> SPEEDSIGN_BLOCKENTITY = REGISTRATE.get().blockEntity("simplespeedsign",SpeedSignBlockEntity::new)/*.visual(() -> SpeedSignBlockRenderer::new)*/.renderer(() -> SpeedSignBlockRenderer::new).validBlock(SPEEDSIGN_BLOCK).register();
 
-    public static final BlockEntry<ExtendedControlsBlock> EXTENDED_TRAIN_CONTROLS = REGISTRATE.get().block("extendedcontrols", ExtendedControlsBlock::new)
-            .initialProperties(SharedProperties::softMetal)
-            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN)
-                    .sound(SoundType.NETHERITE_BLOCK))
-            .addLayer(() -> RenderType::cutoutMipped)
-            .transform(pickaxeOnly())
-            .blockstate((c, p) -> p.horizontalBlock(c.get(),
-                    s -> AssetLookup.partialBaseModel(c, p,
-                            s.getValue(ExtendedControlsBlock.VIRTUAL) ? "virtual" : s.getValue(ExtendedControlsBlock.OPEN) ? "open" : "closed")))
-            .onRegister(movementBehaviour(new ExtendedControlsMovementBehaviour()))
-            .onRegister(interactionBehaviour(new ExtendedControlsInteractionBehaviour()))
-            .lang("Extended Train Controls")
-            .item()
-            .transform(customItemModel())
-            .register();
-
-    // Creates a new BlockItem with the id "cjptt:example_block", combining the namespace and path
-    //public static final RegistryObject<Item> EXAMPLE_BLOCK_ITEM = ITEMS.register("example_block", () -> new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties()));
-
-    // Creates a new food item with the id "cjptt:example_id", nutrition 1 and saturation 2
-    //public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(2f).build())));
+    public static final BlockEntityEntry<AdvancedSpeedSignBlockEntity> ADVANCEDSPEEDSIGN_BLOCKENTITY = REGISTRATE.get().blockEntity("advancedspeedsign",AdvancedSpeedSignBlockEntity::new).validBlocks(ADVANCED_SPEEDSIGN_BLOCK,ADVANCED_SPEEDSIGN_WALL_BLOCK).register();
 
     //Creates a creative tab with the id "cjptt:example_tab" for the example item, that is placed after the combat tabs
     public static final RegistryObject<CreativeModeTab> CJPTTTAB = CREATIVE_MODE_TABS.register("createjapantraintweaks", () -> CreativeModeTab.builder().displayItems((parameters, output) -> {
-        output.accept(SPEEDSIGN_BLOCK.get()); output.accept(EXTENDED_TRAIN_CONTROLS);// Add the example item to the tab. For your own tabs, this method is preferred over the event
+        output.accept(SPEEDSIGN_BLOCK.get()); output.accept(CjpttBlocks.EXTENDED_TRAIN_CONTROLS);// Add the example item to the tab. For your own tabs, this method is preferred over the event
     }).build());
     @SuppressWarnings({"removal"})
     public Cjptt() {

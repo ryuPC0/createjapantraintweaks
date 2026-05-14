@@ -6,6 +6,7 @@ import com.simibubi.create.content.trains.entity.CarriageContraption;
 import io.github.ryuPC0.cjptt.Cjptt;
 import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsBlock;
 import io.github.ryuPC0.cjptt.mixininterface.CarriageContraptionMixinInterface;
+import io.github.ryuPC0.cjptt.registry.CjpttBlocks;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -49,14 +50,14 @@ public abstract class CarriageContraptionMixin extends Contraption implements Ca
     @Inject(method = "capture",at = @At(value = "TAIL"))
     void Cjptt$captureExtendedControls(Level world, BlockPos pos, CallbackInfoReturnable<Pair<StructureTemplate.StructureBlockInfo, BlockEntity>> cir,@Local BlockState blockstate)
     {
-        if(Cjptt.EXTENDED_TRAIN_CONTROLS.has(blockstate)){
+        if(CjpttBlocks.EXTENDED_TRAIN_CONTROLS.has(blockstate)){
             forwardControls = true;
             backwardControls = true;
         }
     }
     @Inject(method = "inControl",at = @At(value = "HEAD"), cancellable = true)
     void Cjptt$inControlExtendedControls(BlockPos pos, Direction direction, CallbackInfoReturnable<Boolean> cir){
-        if(Cjptt.EXTENDED_TRAIN_CONTROLS.has(blocks.get(pos).state())){
+        if(CjpttBlocks.EXTENDED_TRAIN_CONTROLS.has(blocks.get(pos).state())){
             cir.setReturnValue(true);
         }
     }
@@ -69,7 +70,7 @@ public abstract class CarriageContraptionMixin extends Contraption implements Ca
                 BlockPos controlPos = seatpos.relative(direction);
                 if(blocks.containsKey(controlPos)) {
                     BlockState blockState = blocks.get(controlPos).state();
-                    if (Cjptt.EXTENDED_TRAIN_CONTROLS.has(blockState)) {
+                    if (CjpttBlocks.EXTENDED_TRAIN_CONTROLS.has(blockState)) {
                         if(blockState.getValue(ExtendedControlsBlock.FACING) == direction.getOpposite()) {
                             Direction direction1 = assemblyDirection.getClockWise(direction.getAxis());
                             cjptt$extendedconductorSeats.put(seatpos, assemblyDirection.getClockWise(direction.getAxis()));
