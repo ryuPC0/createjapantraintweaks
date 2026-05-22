@@ -3,6 +3,7 @@ package io.github.ryuPC0.cjptt.speedSign.simple;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import io.github.ryuPC0.cjptt.Cjptt;
+import io.github.ryuPC0.cjptt.registry.CjpttBlockEntities;
 import net.minecraft.world.level.block.Block;
 
 import net.minecraft.core.BlockPos;
@@ -24,7 +25,7 @@ public class SpeedSignBlock extends Block implements IBE<SpeedSignBlockEntity>, 
 
     @Override
     public BlockEntityType<? extends SpeedSignBlockEntity> getBlockEntityType() {
-        return Cjptt.SPEEDSIGN_BLOCKENTITY.get();
+        return CjpttBlockEntities.SPEEDSIGN_BLOCKENTITY.get();
     }
 
     @Override

@@ -14,4 +14,6 @@ public class CjpttEdgePointType
 
     public static final EdgePointType<SpeedSign> SPEEDSIGN = EdgePointType.register(new ResourceLocation(MODID,"speedsign"),SpeedSign::new);
     public static final EdgePointType<AdvancedSpeedSign> ADVANCED_SPEEDSIGN = EdgePointType.register(Cjptt.asResource("advancedspeedsign"),AdvancedSpeedSign::new);
+    public static void register() {
+    }
 }

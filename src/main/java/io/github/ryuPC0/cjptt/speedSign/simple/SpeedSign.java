@@ -11,6 +11,7 @@ import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import io.github.ryuPC0.cjptt.Cjptt;
+import io.github.ryuPC0.cjptt.registry.CjpttBlockEntities;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -51,7 +52,7 @@ public class SpeedSign extends SingleBlockEntityEdgePoint implements IBE<SpeedSi
     }
     @Override
     public BlockEntityType<? extends SpeedSignBlockEntity> getBlockEntityType() {
-        return Cjptt.SPEEDSIGN_BLOCKENTITY.get();
+        return CjpttBlockEntities.SPEEDSIGN_BLOCKENTITY.get();
     }
     public FilterItemStack getFilter() {
         return filter;

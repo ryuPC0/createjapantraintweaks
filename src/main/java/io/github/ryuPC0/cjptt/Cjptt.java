@@ -11,10 +11,11 @@ import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsBlock;
 import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsInteractionBehaviour;
 import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlsMovementBehaviour;
-import io.github.ryuPC0.cjptt.registry.CjpttBlocks;
-import io.github.ryuPC0.cjptt.registry.CjpttPackets;
+import io.github.ryuPC0.cjptt.registry.*;
 import io.github.ryuPC0.cjptt.schedule.CjpttSchedule;
+import io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSignBlock;
 import io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSignBlockEntity;
+import io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSignItem;
 import io.github.ryuPC0.cjptt.speedSign.simple.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.Registries;
@@ -46,6 +47,7 @@ import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movem
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 import static io.github.ryuPC0.cjptt.registry.CjpttBlocks.*;
+import static io.github.ryuPC0.cjptt.registry.CjpttEdgePointType.ADVANCED_SPEEDSIGN;
 import static io.github.ryuPC0.cjptt.registry.CjpttEdgePointType.SPEEDSIGN;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -57,37 +59,27 @@ public class Cjptt {
     public static final String MODID = "cjptt";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
-    // Create a Deferred Register to hold Blocks which will all be registered under the "cjptt" namespace
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
-    // Create a Deferred Register to hold Items which will all be registered under the "cjptt" namespace
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "cjptt" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
     public static final NonNullSupplier<Registrate> REGISTRATE = NonNullSupplier.lazy(() -> Registrate.create(MODID));
 
     // Creates a new Block with the id "cjptt:example_block", combining the namespace and path
+    //public static final BlockEntry<SpeedSignBlock> SPEEDSIGN_BLOCK = REGISTRATE.get().block("simplespeedsign",SpeedSignBlock::new).item(SpeedSignBlockItem.ofType(SPEEDSIGN)).transform(customItemModel()).register();
+    //public static final BlockEntry<AdvancedSpeedSignBlock> ADVANCED_SPEEDSIGN_BLOCK = REGISTRATE.get().block("advancedspeedsignblock", AdvancedSpeedSignBlock::new).item(AdvancedSpeedSignItem.ofType( ADVANCED_SPEEDSIGN)).transform(customItemModel()).register();
 
-    public static final BlockEntityEntry<SpeedSignBlockEntity> SPEEDSIGN_BLOCKENTITY = REGISTRATE.get().blockEntity("simplespeedsign",SpeedSignBlockEntity::new)/*.visual(() -> SpeedSignBlockRenderer::new)*/.renderer(() -> SpeedSignBlockRenderer::new).validBlock(SPEEDSIGN_BLOCK).register();
-
-    public static final BlockEntityEntry<AdvancedSpeedSignBlockEntity> ADVANCEDSPEEDSIGN_BLOCKENTITY = REGISTRATE.get().blockEntity("advancedspeedsign",AdvancedSpeedSignBlockEntity::new).validBlocks(ADVANCED_SPEEDSIGN_BLOCK,ADVANCED_SPEEDSIGN_WALL_BLOCK).register();
 
     //Creates a creative tab with the id "cjptt:example_tab" for the example item, that is placed after the combat tabs
-    public static final RegistryObject<CreativeModeTab> CJPTTTAB = CREATIVE_MODE_TABS.register("createjapantraintweaks", () -> CreativeModeTab.builder().displayItems((parameters, output) -> {
-        output.accept(SPEEDSIGN_BLOCK.get()); output.accept(CjpttBlocks.EXTENDED_TRAIN_CONTROLS);// Add the example item to the tab. For your own tabs, this method is preferred over the event
-    }).build());
+
     @SuppressWarnings({"removal"})
     public Cjptt() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
-
-        // Register the Deferred Register to the mod event bus so blocks get registered
-        BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so items get registered
-        ITEMS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so tabs get registered
-        CREATIVE_MODE_TABS.register(modEventBus);
+        CjpttBlocks.register();
+        CjpttBlockEntities.register();
+        CjpttEdgePointType.register();
+        CjpttCreativeModeTab.register();
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         CjpttSchedule.register();
