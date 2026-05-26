@@ -37,17 +37,11 @@ public class TrainHUDMixin {
     }
     @ModifyExpressionValue(method = "renderOverlay",at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/contraptions/actors/trainControls/ControlsHandler;getContraption()Lcom/simibubi/create/content/contraptions/AbstractContraptionEntity;"))
     private static AbstractContraptionEntity Cjptt$renderOverlaygetext(AbstractContraptionEntity original){
-        if(original == null) {
-            return ExtendedControlsHandler.entityref.get();
-        }
-        return original;
+        return original == null ? ExtendedControlsHandler.entityref.get() : original;
     }
     @ModifyExpressionValue(method = "renderOverlay",at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/contraptions/actors/trainControls/ControlsHandler;getControlsPos()Lnet/minecraft/core/BlockPos;"))
     private static BlockPos Cjptt$renderOverlaygetconpos(BlockPos original){
-        if(original == null) {
-            return ExtendedControlsHandler.controlsPos;
-        }
-        return original;
+        return original == null ? ExtendedControlsHandler.controlsPos : original;
     }
     @Inject(method = "renderOverlay",at = @At(value = "INVOKE",target = "Lcom/simibubi/create/foundation/gui/AllGuiTextures;render(Lnet/minecraft/client/gui/GuiGraphics;II)V",ordinal = 4),cancellable = true)
     private static void Cjptt$renderOverlaySpeedText(ForgeGui gui, GuiGraphics graphics, float partialTicks, int width, int height, CallbackInfo ci, @Local PoseStack poseStack, @Local Carriage carriage)
@@ -74,4 +68,5 @@ public class TrainHUDMixin {
     private static double Cjptt$tickspeedaccuratefix(double pValue){
         return pValue - 0.05;
     }
+
 }

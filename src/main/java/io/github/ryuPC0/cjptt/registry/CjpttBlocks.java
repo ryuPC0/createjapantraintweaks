@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.RotationSegment;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
@@ -47,10 +48,9 @@ public class CjpttBlocks {
     public static final BlockEntry<SpeedSignBlock> SPEEDSIGN_BLOCK = REGISTRATE.get().block("simplespeedsign",SpeedSignBlock::new).item(SpeedSignBlockItem.ofType(SPEEDSIGN)).transform(customItemModel()).register();
     public static final BlockEntry<AdvancedSpeedSignBlock> ADVANCED_SPEEDSIGN_BLOCK = REGISTRATE.get().block("advancedspeedsignblock", AdvancedSpeedSignBlock::new)
             .blockstate((c,p) -> p.getVariantBuilder(c.getEntry()).forAllStatesExcept((state) ->{
-
-                Direction dir = state.getValue(AdvancedSpeedSignBlock.FACING);
-                return ConfiguredModel.builder().build();
-            },AdvancedSpeedSignBlock.WATERLOGGED,AdvancedSpeedSignBlock.FACING,AdvancedSpeedSignBlock.ROTATION)).item(AdvancedSpeedSignItem.ofType(ADVANCED_SPEEDSIGN)).transform(customItemModel()).register();
+                int dir = state.getValue(AdvancedSpeedSignBlock.ROTATION);
+                return ConfiguredModel.builder().modelFile(AssetLookup.partialBaseModel(c,p,dir > 15 ? "wall":"")).rotationY(dir > 15 ? (dir - 16) * 90 : (int) (dir * 22.5)).build();
+            },AdvancedSpeedSignBlock.WATERLOGGED,AdvancedSpeedSignBlock.ROTATION)).item(AdvancedSpeedSignItem.ofType(ADVANCED_SPEEDSIGN)).transform(customItemModel()).register();
 
     public static void register() {
     }

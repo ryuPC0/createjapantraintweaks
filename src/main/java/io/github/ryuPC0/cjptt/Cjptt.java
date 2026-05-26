@@ -62,7 +62,9 @@ public class Cjptt {
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "cjptt" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
     public static final NonNullSupplier<Registrate> REGISTRATE = NonNullSupplier.lazy(() -> Registrate.create(MODID));
-
+    public static final RegistryObject<CreativeModeTab> CJPTTTAB = CREATIVE_MODE_TABS.register("createjapantraintweaks", () -> CreativeModeTab.builder().displayItems((parameters, output) -> {
+        output.accept(SPEEDSIGN_BLOCK.get()); output.accept(CjpttBlocks.EXTENDED_TRAIN_CONTROLS); output.accept(CjpttBlocks.ADVANCED_SPEEDSIGN_BLOCK);
+    }).build());
     // Creates a new Block with the id "cjptt:example_block", combining the namespace and path
     //public static final BlockEntry<SpeedSignBlock> SPEEDSIGN_BLOCK = REGISTRATE.get().block("simplespeedsign",SpeedSignBlock::new).item(SpeedSignBlockItem.ofType(SPEEDSIGN)).transform(customItemModel()).register();
     //public static final BlockEntry<AdvancedSpeedSignBlock> ADVANCED_SPEEDSIGN_BLOCK = REGISTRATE.get().block("advancedspeedsignblock", AdvancedSpeedSignBlock::new).item(AdvancedSpeedSignItem.ofType( ADVANCED_SPEEDSIGN)).transform(customItemModel()).register();
@@ -79,9 +81,9 @@ public class Cjptt {
         CjpttBlocks.register();
         CjpttBlockEntities.register();
         CjpttEdgePointType.register();
-        CjpttCreativeModeTab.register();
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        CREATIVE_MODE_TABS.register(modEventBus);
         CjpttSchedule.register();
         CjpttPackets.registerPackets();
         // Register the item to a creative tab
