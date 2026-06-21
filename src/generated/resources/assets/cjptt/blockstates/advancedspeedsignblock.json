@@ -1,0 +1,79 @@
+{
+  "variants": {
+    "signrotation=0": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc0"
+    },
+    "signrotation=1": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc1"
+    },
+    "signrotation=10": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc2",
+      "y": 180
+    },
+    "signrotation=11": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc3",
+      "y": 180
+    },
+    "signrotation=12": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc0",
+      "y": 270
+    },
+    "signrotation=13": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc1",
+      "y": 270
+    },
+    "signrotation=14": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc2",
+      "y": 270
+    },
+    "signrotation=15": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc3",
+      "y": 270
+    },
+    "signrotation=16": {
+      "model": "cjptt:block/advancedspeedsignblock/block_wall"
+    },
+    "signrotation=17": {
+      "model": "cjptt:block/advancedspeedsignblock/block_wall",
+      "y": 90
+    },
+    "signrotation=18": {
+      "model": "cjptt:block/advancedspeedsignblock/block_wall",
+      "y": 180
+    },
+    "signrotation=19": {
+      "model": "cjptt:block/advancedspeedsignblock/block_wall",
+      "y": 270
+    },
+    "signrotation=2": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc2"
+    },
+    "signrotation=3": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc3"
+    },
+    "signrotation=4": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc0",
+      "y": 90
+    },
+    "signrotation=5": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc1",
+      "y": 90
+    },
+    "signrotation=6": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc2",
+      "y": 90
+    },
+    "signrotation=7": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc3",
+      "y": 90
+    },
+    "signrotation=8": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc0",
+      "y": 180
+    },
+    "signrotation=9": {
+      "model": "cjptt:block/advancedspeedsignblock/block_roc1",
+      "y": 180
+    }
+  }
+}

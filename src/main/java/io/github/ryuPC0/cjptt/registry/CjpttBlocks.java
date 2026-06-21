@@ -12,6 +12,7 @@ import io.github.ryuPC0.cjptt.speedSign.simple.SpeedSignBlock;
 import io.github.ryuPC0.cjptt.speedSign.simple.SpeedSignBlockItem;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.RotationSegment;
@@ -22,6 +23,7 @@ import static com.simibubi.create.api.behaviour.interaction.MovingInteractionBeh
 import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movementBehaviour;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
+import static io.github.ryuPC0.cjptt.Cjptt.LOGGER;
 import static io.github.ryuPC0.cjptt.Cjptt.REGISTRATE;
 import static io.github.ryuPC0.cjptt.registry.CjpttEdgePointType.ADVANCED_SPEEDSIGN;
 import static io.github.ryuPC0.cjptt.registry.CjpttEdgePointType.SPEEDSIGN;
@@ -45,13 +47,13 @@ public class CjpttBlocks {
             .register();
 
 
-    public static final BlockEntry<SpeedSignBlock> SPEEDSIGN_BLOCK = REGISTRATE.get().block("simplespeedsign",SpeedSignBlock::new).item(SpeedSignBlockItem.ofType(SPEEDSIGN)).transform(customItemModel()).register();
+    public static final BlockEntry<SpeedSignBlock> SPEEDSIGN_BLOCK = REGISTRATE.get().block("simplespeedsign",SpeedSignBlock::new).defaultBlockstate().item(SpeedSignBlockItem.ofType(SPEEDSIGN)).transform(customItemModel()).register();
     public static final BlockEntry<AdvancedSpeedSignBlock> ADVANCED_SPEEDSIGN_BLOCK = REGISTRATE.get().block("advancedspeedsignblock", AdvancedSpeedSignBlock::new)
             .blockstate((c,p) -> p.getVariantBuilder(c.getEntry()).forAllStatesExcept((state) ->{
                 int dir = state.getValue(AdvancedSpeedSignBlock.ROTATION);
-                return ConfiguredModel.builder().modelFile(AssetLookup.partialBaseModel(c,p,dir > 15 ? "wall":"")).rotationY(dir > 15 ? (dir - 16) * 90 : (int) (dir * 22.5)).build();
-            },AdvancedSpeedSignBlock.WATERLOGGED,AdvancedSpeedSignBlock.ROTATION)).item(AdvancedSpeedSignItem.ofType(ADVANCED_SPEEDSIGN)).transform(customItemModel()).register();
-
+                return ConfiguredModel.builder().modelFile(AssetLookup.partialBaseModel(c,p,dir > 15 ? "wall": "roc" + dir % 4)).rotationY(dir > 15 ? (dir - 16) * 90 : (dir / 4 * 90)).build();
+            },AdvancedSpeedSignBlock.WATERLOGGED)).item(AdvancedSpeedSignItem.ofType(ADVANCED_SPEEDSIGN)).transform(customItemModel()).register();
+    public static final BlockEntry<Block> TEST_TRAIN_GLASS = REGISTRATE.get().block("trainglass",Block::new).defaultBlockstate().simpleItem().register();
     public static void register() {
     }
 }

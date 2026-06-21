@@ -9,4 +9,4 @@
 Create6.0.8以降とSteam 'n' Rails1.7.1以降が必要です。
 Createは[MITライセンス](https://spdx.org/licenses/MIT.html)、Stean 'n' Railsは[LGPLライセンス](https://spdx.org/licenses/LGPL-3.0-or-later.html)です。
 
-そして、この二つのコードの一部を参考にしています。
+そして、この二つのコードの一部に加え、以下のコードを参考にしています。
