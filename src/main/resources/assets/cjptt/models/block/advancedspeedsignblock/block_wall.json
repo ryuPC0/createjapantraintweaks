@@ -1,7 +1,12 @@
 {
-	"parent":"block.block",
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
+	"texture_size": [1, 1],
+	"parent": "block.block",
+	"textures":
+	{
+		"0": "cjptt:block/simplewhite"
+	},
 	"elements": [
 		{
 			"from": [3, 4, 15],
@@ -9,12 +14,12 @@
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 14]},
 			"color": 8,
 			"faces": {
-				"north": {"uv": [2, 0, 12, 8], "texture": "#missing"},
-				"east": {"uv": [0, 0, 1, 8], "texture": "#missing"},
-				"south": {"uv": [2, 0, 12, 8], "texture": "#missing"},
-				"west": {"uv": [1, 0, 2, 8], "texture": "#missing"},
-				"up": {"uv": [2, 1, 12, 2], "texture": "#missing"},
-				"down": {"uv": [2, 0, 12, 1], "texture": "#missing"}
+				"north": {"uv": [2, 0, 12, 8], "texture": "#0"},
+				"east": {"uv": [0, 0, 1, 8], "texture": "#0"},
+				"south": {"uv": [2, 0, 12, 8], "texture": "#0"},
+				"west": {"uv": [1, 0, 2, 8], "texture": "#0"},
+				"up": {"uv": [2, 1, 12, 2], "texture": "#0"},
+				"down": {"uv": [2, 0, 12, 1], "texture": "#0"}
 			}
 		}
 	]
