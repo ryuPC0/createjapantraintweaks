@@ -1,7 +1,7 @@
 package io.github.ryuPC0.cjptt.speedSign.simple;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.railwayteam.railways.util.CustomTrackOverlayRendering;
+//import com.railwayteam.railways.util.CustomTrackOverlayRendering;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.trains.track.ITrackBlock;
 import com.simibubi.create.content.trains.track.TrackTargetingBehaviour;
@@ -50,7 +50,8 @@ public class SpeedSignBlockRenderer extends SmartBlockEntityRenderer<SpeedSignBl
         */
         TrackTargetingBehaviour<SpeedSign> target = be.edgePoint;
         BlockPos pos = be.getBlockPos();
-        boolean offsetToSide = CustomTrackOverlayRendering.overlayWillOverlap(target);
+        //Need S'n'R,but other method is not work
+        //boolean offsetToSide = CustomTrackOverlayRendering.overlayWillOverlap(target);
 
         BlockPos targetPosition = target.getGlobalPosition();
         Level level = be.getLevel();
@@ -63,8 +64,9 @@ public class SpeedSignBlockRenderer extends SmartBlockEntityRenderer<SpeedSignBl
         ms.pushPose();
         TransformStack.of(ms)
                 .translate(targetPosition.subtract(pos));
-        CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
-                buffer, light, overlay, AllPartialModels.TRACK_SIGNAL_OVERLAY, 1, offsetToSide);
+        //ue
+        //CustomTrackOverlayRendering.renderOverlay(level, targetPosition, target.getTargetDirection(), target.getTargetBezier(), ms,
+        //        buffer, light, overlay, AllPartialModels.TRACK_SIGNAL_OVERLAY, 1, offsetToSide);
         ms.popPose();
     }
 }

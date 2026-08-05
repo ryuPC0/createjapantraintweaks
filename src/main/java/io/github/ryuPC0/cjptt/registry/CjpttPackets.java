@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.networking.SimplePacketBase;
 import io.github.ryuPC0.cjptt.Cjptt;
 import io.github.ryuPC0.cjptt.extended.train.ExtendedTrainPacket;
 import io.github.ryuPC0.cjptt.extended.traincontrolsblock.ExtendedControlPacket;
+import io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSignPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -24,7 +25,8 @@ import java.util.function.Supplier;
 
 public enum CjpttPackets {
     EXTTRAIN_SYNC(ExtendedTrainPacket.class,ExtendedTrainPacket::new,PLAY_TO_CLIENT),
-    EXTCON_CONCALL(ExtendedControlPacket.class,ExtendedControlPacket::new,PLAY_TO_CLIENT);
+    EXTCON_CONCALL(ExtendedControlPacket.class,ExtendedControlPacket::new,PLAY_TO_CLIENT),
+    ADVSIGN_APPLY(AdvancedSpeedSignPacket.class,AdvancedSpeedSignPacket::new,PLAY_TO_SERVER);
     public static final ResourceLocation CHANNEL_NAME = Cjptt.asResource("main");
     public static final int NETWORK_VERSION = 3;
     public static final String NETWORK_VERSION_STR = String.valueOf(NETWORK_VERSION);

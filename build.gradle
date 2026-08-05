@@ -185,7 +185,7 @@ dependencies {
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
     implementation("io.github.llamalad7:mixinextras-forge:0.4.1")
 
-    implementation fg.deobf("curse.maven:create-steam-n-rails-688231:7700119")
+    //implementation fg.deobf("curse.maven:create-steam-n-rails-688231:7700119")
     implementation fg.deobf("curse.maven:jei-238222:7391695")
 
 }

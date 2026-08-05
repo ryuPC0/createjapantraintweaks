@@ -2,20 +2,28 @@ package io.github.ryuPC0.cjptt.speedSign.advanced;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 
 import io.github.ryuPC0.cjptt.Cjptt;
 import io.github.ryuPC0.cjptt.registry.CjpttBlockEntities;
+import net.createmod.catnip.gui.ScreenOpener;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,9 +32,12 @@ import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.WaterFluid;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -90,6 +101,24 @@ public class AdvancedSpeedSignBlock extends Block implements IBE<AdvancedSpeedSi
     public @NotNull VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         VoxelShape voxelShape = AABBS.get(pState.getValue(ROTATION));
         return voxelShape != null ? voxelShape : SHAPE;
+    }
+    @Override
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
+                                 BlockHitResult pHit){
+        if (pPlayer == null || pPlayer.isShiftKeyDown())
+            return InteractionResult.PASS;
+        ItemStack itemInHand = pPlayer.getItemInHand(pHand);
+        if (AllItems.WRENCH.isIn(itemInHand))
+            return InteractionResult.PASS;
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+                () -> () -> withBlockEntityDo(pLevel, pPos, be -> this.displayScreen( pPlayer,be)));
+        return InteractionResult.SUCCESS;
+    }
+    protected void displayScreen(Player player, AdvancedSpeedSignBlockEntity be) {
+        if (!(player instanceof LocalPlayer))
+            return;
+        if(be.edgePoint.getEdgePoint() != null)
+            ScreenOpener.open(new AdvancedSpeedSignEditScreen(be,be.edgePoint.getEdgePoint()));
     }
 
     public boolean isPossibleToRespawnInThis(BlockState pState) {
