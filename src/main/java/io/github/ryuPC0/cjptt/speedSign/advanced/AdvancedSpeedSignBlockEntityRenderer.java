@@ -36,14 +36,14 @@ public class AdvancedSpeedSignBlockEntityRenderer extends SafeBlockEntityRendere
 
     @Override
     protected void renderSafe(AdvancedSpeedSignBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light,int overlay) {
-        if(be.edgePoint == null) {
+        if(be.getedgePoint() == null) {
             return;
         }
         DrawRest(be,partialTicks,ms,buffer,light,overlay);
         DrawTrack(be,partialTicks,ms,buffer, light,overlay);
     }
     protected void DrawRest(AdvancedSpeedSignBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light,int overlay){
-        AdvancedSpeedSign edgepoint = be.edgePoint.getEdgePoint();
+        AdvancedSpeedSign edgepoint = be.getedgePoint();
         if(edgepoint == null) return;
         boolean front = be.front;
         AbstractLimitRule lim = edgepoint.speed.get(front);

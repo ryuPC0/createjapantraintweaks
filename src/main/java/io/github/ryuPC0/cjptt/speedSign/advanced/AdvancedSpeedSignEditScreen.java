@@ -3,6 +3,7 @@ package io.github.ryuPC0.cjptt.speedSign.advanced;
 import com.simibubi.create.AllPackets;
 import com.simibubi.create.foundation.gui.widget.IconButton;
 import com.simibubi.create.foundation.gui.widget.SelectionScrollInput;
+import io.github.ryuPC0.cjptt.Cjptt;
 import io.github.ryuPC0.cjptt.registry.CjpttPackets;
 import io.github.ryuPC0.cjptt.speedSign.advanced.limitrule.AbstractLimitRule;
 import io.github.ryuPC0.cjptt.speedSign.advanced.limitrule.LimitRuleType;
@@ -63,8 +64,8 @@ public class AdvancedSpeedSignEditScreen extends AbstractSimiScreen {
 
     @Override
     public void removed() {
-        super.removed();
         CjpttPackets.getChannel().sendToServer(new AdvancedSpeedSignPacket(be.getBlockPos(),buffer));
+        super.removed();
     }
 
     @Override

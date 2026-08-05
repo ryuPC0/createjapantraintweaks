@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.*;
 
+@SuppressWarnings({"DataFlowIssue", "ConstantValue"})
 public class AdvancedSpeedSign extends TrackEdgePoint {
     public Couple<Set<BlockPos>> blockEntities;
     public Couple<AbstractLimitRule> speed;
@@ -54,6 +55,8 @@ public class AdvancedSpeedSign extends TrackEdgePoint {
     @Override
     public void blockEntityRemoved(BlockPos blockEntityPos, boolean front) {
         blockEntities.get(front).remove(blockEntityPos);
+        if(blockEntities.get(front).isEmpty())
+            speed.set(front,null);
         if (blockEntities.getFirst().isEmpty() && blockEntities.getSecond().isEmpty())
             removeFromAllGraphs();
     }

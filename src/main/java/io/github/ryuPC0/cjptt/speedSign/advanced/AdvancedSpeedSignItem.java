@@ -18,7 +18,6 @@ import static io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSignBlock.W
 import static net.minecraft.world.level.material.Fluids.WATER;
 
 public class AdvancedSpeedSignItem extends TrackTargetingBlockItem {
-    private final Direction attachmentDirection;
 
     public static <T extends Block> NonNullBiFunction<? super T, Properties, TrackTargetingBlockItem> ofType(
             EdgePointType<?> type) {
@@ -29,7 +28,6 @@ public class AdvancedSpeedSignItem extends TrackTargetingBlockItem {
     }
     public AdvancedSpeedSignItem(Block pBlock,Properties pProperties, EdgePointType<?> type) {
         super(pBlock, pProperties, type);
-        this.attachmentDirection = Direction.DOWN;
     }
     @Override
     protected BlockState getPlacementState(@NotNull BlockPlaceContext pContext) {

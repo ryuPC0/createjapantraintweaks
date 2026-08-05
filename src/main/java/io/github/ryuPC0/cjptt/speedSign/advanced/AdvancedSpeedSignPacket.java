@@ -24,14 +24,14 @@ public class AdvancedSpeedSignPacket extends BlockEntityConfigurationPacket<Adva
 
     @Override
     protected void readSettings(FriendlyByteBuf buffer) {
-        LimitRuleType.read(buffer);
+        rule = LimitRuleType.read(buffer);
     }
 
     @Override
     protected void applySettings(AdvancedSpeedSignBlockEntity be) {
-        AdvancedSpeedSign edgePoint = be.edgePoint.getEdgePoint();
-        Cjptt.LOGGER.info("{},{},{}",edgePoint,rule,be.front);
-        if(edgePoint != null)
-            edgePoint.speed.set(be.front,rule);
+        AdvancedSpeedSign edgePoint = be.getedgePoint();
+        if(edgePoint != null) {
+            edgePoint.speed.set(be.front, rule);
+        }
     }
 }

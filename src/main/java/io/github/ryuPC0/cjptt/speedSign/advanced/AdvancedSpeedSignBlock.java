@@ -117,8 +117,8 @@ public class AdvancedSpeedSignBlock extends Block implements IBE<AdvancedSpeedSi
     protected void displayScreen(Player player, AdvancedSpeedSignBlockEntity be) {
         if (!(player instanceof LocalPlayer))
             return;
-        if(be.edgePoint.getEdgePoint() != null)
-            ScreenOpener.open(new AdvancedSpeedSignEditScreen(be,be.edgePoint.getEdgePoint()));
+        if(be.getedgePoint() != null)
+            ScreenOpener.open(new AdvancedSpeedSignEditScreen(be,be.getedgePoint()));
     }
 
     public boolean isPossibleToRespawnInThis(BlockState pState) {

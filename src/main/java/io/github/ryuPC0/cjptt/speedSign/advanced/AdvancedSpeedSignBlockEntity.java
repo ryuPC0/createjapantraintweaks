@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
 
 public class AdvancedSpeedSignBlockEntity extends SmartBlockEntity implements TransformableBlockEntity {
-    public TrackTargetingBehaviour<AdvancedSpeedSign> edgePoint;
+    private TrackTargetingBehaviour<AdvancedSpeedSign> edgePoint;
     public boolean front;
     public AdvancedSpeedSignBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -31,6 +31,9 @@ public class AdvancedSpeedSignBlockEntity extends SmartBlockEntity implements Tr
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> list) {
         list.add(edgePoint = new TrackTargetingBehaviour<>(this, CjpttEdgePointType.ADVANCED_SPEEDSIGN));
+    }
+    public AdvancedSpeedSign getedgePoint(){
+        return edgePoint.getEdgePoint();
     }
 
     @Override
