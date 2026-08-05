@@ -7,7 +7,7 @@
 
 ## 前提と参考
 Create6.0.8以降が必要です。
-Createは[MITライセンス](https://spdx.org/licenses/MIT.html)。
+Createは[MITライセンス](https://spdx.org/licenses/MIT.html)です。
 
 そして、Createのコードの一部に加え、以下のコードの一部を参考にしています。
 
