@@ -1,9 +1,6 @@
 package io.github.ryuPC0.cjptt.speedSign.advanced;
 
-import com.simibubi.create.AllPackets;
-import com.simibubi.create.foundation.gui.widget.IconButton;
 import com.simibubi.create.foundation.gui.widget.SelectionScrollInput;
-import io.github.ryuPC0.cjptt.Cjptt;
 import io.github.ryuPC0.cjptt.registry.CjpttPackets;
 import io.github.ryuPC0.cjptt.speedSign.advanced.limitrule.AbstractLimitRule;
 import io.github.ryuPC0.cjptt.speedSign.advanced.limitrule.LimitRuleType;
@@ -11,15 +8,10 @@ import net.createmod.catnip.gui.AbstractSimiScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.TextAndImageButton;
 import net.minecraft.network.chat.Component;
 
 
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AdvancedSpeedSignEditScreen extends AbstractSimiScreen {
@@ -64,7 +56,7 @@ public class AdvancedSpeedSignEditScreen extends AbstractSimiScreen {
 
     @Override
     public void removed() {
-        CjpttPackets.getChannel().sendToServer(new AdvancedSpeedSignPacket(be.getBlockPos(),buffer));
+        CjpttPackets.getChannel().sendToServer(new AdvancedSpeedSignbePacket(be.getBlockPos(),buffer));
         super.removed();
     }
 

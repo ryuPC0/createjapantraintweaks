@@ -1,10 +1,12 @@
 package io.github.ryuPC0.cjptt.speedSign.advanced;
 
+import com.simibubi.create.Create;
 import com.simibubi.create.content.logistics.filter.FilterItemStack;
-import com.simibubi.create.content.trains.graph.DimensionPalette;
-import com.simibubi.create.content.trains.graph.EdgePointType;
+import com.simibubi.create.content.trains.graph.*;
 import com.simibubi.create.content.trains.signal.SingleBlockEntityEdgePoint;
 import com.simibubi.create.content.trains.signal.TrackEdgePoint;
+import io.github.ryuPC0.cjptt.Cjptt;
+import io.github.ryuPC0.cjptt.registry.CjpttPackets;
 import io.github.ryuPC0.cjptt.speedSign.advanced.limitrule.AbstractLimitRule;
 import io.github.ryuPC0.cjptt.speedSign.advanced.limitrule.LimitRuleType;
 import io.github.ryuPC0.cjptt.speedSign.advanced.limitrule.Limitrem;
@@ -17,6 +19,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.*;
 
@@ -45,8 +48,14 @@ public class AdvancedSpeedSign extends TrackEdgePoint {
 
     @Override
     public void blockEntityAdded(BlockEntity blockEntity, boolean front) {
-        if (blockEntities.get(front).isEmpty())
+        if (blockEntities.get(front).isEmpty()) {
             speed.set(front, LimitRuleType.LIMITREM.create());
+            if(!blockEntities.both(Set::isEmpty)) {
+                if(!blockEntity.getLevel().isClientSide){
+                    CjpttPackets.getChannel().send(PacketDistributor.ALL.noArg(), new AdvancedSpeedSignedgePacket(this,front,blockEntity.getLevel()));
+                }
+            }
+        }
         blockEntities.get(front).add(blockEntity.getBlockPos());
         if(blockEntity instanceof AdvancedSpeedSignBlockEntity ass){
             ass.front = front;
