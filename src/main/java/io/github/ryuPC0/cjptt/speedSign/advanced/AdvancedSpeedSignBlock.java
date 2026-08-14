@@ -40,6 +40,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3d;
 
 import java.util.Map;
 
@@ -151,5 +152,4 @@ public class AdvancedSpeedSignBlock extends Block implements IBE<AdvancedSpeedSi
     public void onRemove(@NotNull BlockState state, @NotNull Level worldIn, @NotNull BlockPos pos, @NotNull BlockState newState, boolean isMoving) {
         IBE.onRemove(state, worldIn, pos, newState);
     }
-
 }

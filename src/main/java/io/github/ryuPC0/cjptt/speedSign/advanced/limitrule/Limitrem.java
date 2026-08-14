@@ -26,9 +26,8 @@ public class Limitrem extends AbstractLimitRule{
     @Override
     public void RenderSign(AdvancedSpeedSignBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, Vector2i posa, Vector2i posb, int light, int overlay, ResourceLocation resrifimage) {
         ms.pushPose();
-        int dir = be.getBlockState().getValue(AdvancedSpeedSignBlock.ROTATION);
-        double degree = Getdegree(dir);
-        Vector3d pos = GetDrawOffSet(be,degree,dir > 15);
+        double degree = GetDegree(be);
+        Vector3d pos = GetDrawOffset(be,degree);
         ms.translate(pos.x,pos.y,pos.z);
         ms.mulPose(Axis.YP.rotationDegrees((float)degree));
         ms.scale(1f /16,1f/16,1f/16);
