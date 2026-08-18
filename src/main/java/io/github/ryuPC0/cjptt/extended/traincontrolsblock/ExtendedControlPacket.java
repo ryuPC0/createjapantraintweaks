@@ -49,12 +49,10 @@ public class ExtendedControlPacket extends SimplePacketBase {
         context.enqueueWork(() ->{
             switch (controltype){
                 case NONE ->{
-                    Cjptt.LOGGER.info("end");
                     ExtendedControlsHandler.EndConductor();
                 }
                 case CONDUCTOR ->{
                     Train train = Create.RAILWAYS.trains.get(id);
-                    Cjptt.LOGGER.info("{}",train);
                     if(train !=null){
                         CarriageContraptionEntity entity = train.carriages.get(carrigeindex).anyAvailableEntity();
                         if(entity != null){
