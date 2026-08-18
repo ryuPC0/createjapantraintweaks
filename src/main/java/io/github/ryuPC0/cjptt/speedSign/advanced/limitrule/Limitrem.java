@@ -5,6 +5,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSignBlock;
 import io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSignBlockEntity;
+import net.createmod.catnip.gui.AbstractSimiScreen;
+import net.createmod.catnip.gui.widget.AbstractSimiWidget;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.nbt.CompoundTag;
@@ -13,6 +15,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
 import org.joml.Vector2i;
 import org.joml.Vector3d;
+
+import java.util.Collection;
+import java.util.List;
 
 import static io.github.ryuPC0.cjptt.Cjptt.LOGGER;
 
@@ -45,6 +50,12 @@ public class Limitrem extends AbstractLimitRule{
         vc.vertex(m, x1, y2, 0).color(1f,1f,1f,1f).uv(0,1).overlayCoords(overlay).uv2(15728880).normal(0,0,1).endVertex();
         ms.popPose();
     }
+
+    @Override
+    public void RenderAdditionalSettings(Collection<AbstractSimiWidget> wigetlist) {
+
+    }
+
 
     @Override
     public void read(CompoundTag nbt) {     }
