@@ -3,8 +3,11 @@ package io.github.ryuPC0.cjptt.speedSign.advanced.limitrule;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import com.simibubi.create.content.trains.entity.Train;
+import io.github.ryuPC0.cjptt.mixininterface.TrainMixinInterface;
 import io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSignBlock;
 import io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSignBlockEntity;
+import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.gui.AbstractSimiScreen;
 import net.createmod.catnip.gui.widget.AbstractSimiWidget;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -26,6 +29,22 @@ public class Limitrem extends AbstractLimitRule{
     @Override
     public float GetSpeed() {
         return -1;
+    }
+
+    @Override
+    public void ApplyLimit(TrainMixinInterface train) {
+        /*
+        List<Couple<Double>> speedlimitlist = (train).cjptt$getspeedlimit();
+        if(!speedlimitlist.isEmpty())
+            speedlimitlist.remove(0);
+
+         */
+    }
+    @Override
+    public void ApplyBack(TrainMixinInterface train){
+        List<Couple<Double>> speedlimitlist = (train).cjptt$getspeedlimit();
+        if(!speedlimitlist.isEmpty())
+            speedlimitlist.remove(0);
     }
 
     @Override

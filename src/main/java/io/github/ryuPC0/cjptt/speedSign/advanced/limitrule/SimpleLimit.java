@@ -2,10 +2,13 @@ package io.github.ryuPC0.cjptt.speedSign.advanced.limitrule;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import com.simibubi.create.content.trains.entity.Train;
 import com.simibubi.create.foundation.gui.widget.Label;
 import com.simibubi.create.foundation.gui.widget.ScrollInput;
 import io.github.ryuPC0.cjptt.Cjptt;
+import io.github.ryuPC0.cjptt.mixininterface.TrainMixinInterface;
 import io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSignBlockEntity;
+import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.gui.AbstractSimiScreen;
 import net.createmod.catnip.gui.widget.AbstractSimiWidget;
 import net.minecraft.client.Minecraft;
@@ -26,6 +29,11 @@ public class SimpleLimit extends AbstractLimitRule{
     @Override
     public float GetSpeed() {
         return speed / 3.6f;
+    }
+
+    @Override
+    public void ApplyLimit(TrainMixinInterface train) {
+        train.cjptt$getspeedlimit().add(Couple.create(speed / 3.6,0.0));
     }
 
     @Override

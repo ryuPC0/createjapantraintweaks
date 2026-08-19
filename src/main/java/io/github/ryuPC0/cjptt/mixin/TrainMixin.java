@@ -15,6 +15,8 @@ import io.github.ryuPC0.cjptt.mixininterface.CarriageContraptionMixinInterface;
 import io.github.ryuPC0.cjptt.mixin.accessor.AbstractContraptionEntityAccessor;
 import io.github.ryuPC0.cjptt.mixin.accessor.CarriageAccessor;
 import io.github.ryuPC0.cjptt.mixininterface.TrainMixinInterface;
+import io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSign;
+import io.github.ryuPC0.cjptt.speedSign.advanced.limitrule.AbstractLimitRule;
 import io.github.ryuPC0.cjptt.speedSign.simple.SpeedSign;
 import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.data.Pair;
@@ -27,6 +29,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.server.ServerLifecycleHooks;
+import org.apache.commons.lang3.mutable.MutableDouble;
+import org.apache.commons.lang3.mutable.MutableFloat;
 import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,11 +43,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.*;
 
+@SuppressWarnings("ConstantValue")
 @Mixin(value = Train.class,remap = false)
-public class TrainMixin implements TrainMixinInterface {
+public abstract class TrainMixin implements TrainMixinInterface {
     @Shadow public double throttle;
     @Shadow public List<Carriage> carriages;
     @Shadow public Map<UUID, Pair<Integer, Boolean>> cachedObserverFiltering;
+
+    @Shadow public abstract float maxSpeed();
+
     @Unique public boolean cjptt$extendedtrain;
     @Unique public List<Couple<Double>> cjptt$speedlimitlist;
     @Override
@@ -126,6 +134,29 @@ public class TrainMixin implements TrainMixinInterface {
                     }
                 }
                 //*/
+            }
+        } else if (patt13732$temp instanceof AdvancedSpeedSign advancedspeedsign)  {
+            AbstractLimitRule rule = advancedspeedsign.speed.get(advancedspeedsign.isPrimary(couple.getSecond().getSecond()));
+            if(rule != null) {
+                rule.ApplyLimit(this);
+                cjptt$applythrottle();
+            }
+        }
+    }
+    @Unique
+    private void cjptt$applythrottle(){
+        MutableDouble maxthrottle = new MutableDouble(1.0);
+        cjptt$speedlimitlist.forEach((item)-> maxthrottle.setValue(Math.min(item.getFirst() / 20 / maxSpeed(),maxthrottle.getValue())));
+        throttle = maxthrottle.getValue();
+    }
+    @Inject(method = "lambda$backSignalListener$10",at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/data/Pair;getFirst()Ljava/lang/Object;",ordinal = 1),cancellable = true)
+    void Cjptt$backsignallistener(Double distance, Pair<TrackEdgePoint,Couple<TrackNode>> couple, CallbackInfoReturnable<Boolean> cir){
+        TrackEdgePoint edgePoint = couple.getFirst();
+        if(edgePoint instanceof AdvancedSpeedSign advancedSpeedSign){
+            AbstractLimitRule rule = advancedSpeedSign.speed.get(advancedSpeedSign.isPrimary(couple.getSecond().getSecond()));
+            if(rule != null) {
+                rule.ApplyBack(this);
+                cjptt$applythrottle();
             }
         }
     }

@@ -1,8 +1,11 @@
 package io.github.ryuPC0.cjptt.speedSign.advanced.limitrule;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.simibubi.create.content.trains.entity.Train;
+import io.github.ryuPC0.cjptt.mixininterface.TrainMixinInterface;
 import io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSignBlock;
 import io.github.ryuPC0.cjptt.speedSign.advanced.AdvancedSpeedSignBlockEntity;
+import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.gui.AbstractSimiScreen;
 import net.createmod.catnip.gui.widget.AbstractSimiWidget;
 import net.createmod.catnip.nbt.NBTHelper;
@@ -28,6 +31,12 @@ public abstract class AbstractLimitRule {
         return type;
     }
     public abstract float GetSpeed();
+    public abstract void ApplyLimit(TrainMixinInterface train);
+    public void ApplyBack(TrainMixinInterface train){
+        List<Couple<Double>> speedlimitlist = (train).cjptt$getspeedlimit();
+        if(speedlimitlist.size() > 1)
+            speedlimitlist.remove(0);
+    }
     @OnlyIn(Dist.CLIENT)
     public abstract void RenderSign(AdvancedSpeedSignBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, Vector2i posa,Vector2i posb, int light, int overlay, ResourceLocation resrifimage);
     public abstract void RenderAdditionalSettings(Collection<AbstractSimiWidget> wigetlist);
